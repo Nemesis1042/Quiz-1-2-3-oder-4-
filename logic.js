@@ -6,14 +6,33 @@ async function fetchQuestions() {
     try {
         const response = await fetch("getquestion.php");
         if (!response.ok) {
-            throw new Error("Failed to fetch questions from the server.");
+            throw new Error(`Server error: ${response.status}`);
         }
-        questions = await response.json();
+
+        const textData = await response.text();
+        if (textData === "No questions found") {
+            alert("No questions available.");
+            return;
+        }
+
+        parseQuestions(textData);
         startQuiz();
     } catch (error) {
         console.error("Error fetching questions:", error);
         alert("Unable to load questions. Please try again later.");
     }
+}
+
+// Function to parse plain-text questions into a structured array
+function parseQuestions(data) {
+    questions = data.split("\n").map((line) => {
+        const parts = line.split("|");
+        return {
+            question: parts[0],
+            options: [parts[1], parts[2], parts[3], parts[4]],
+            correctAnswer: parseInt(parts[5]) - 1, // Convert to 0-based index
+        };
+    });
 }
 
 // Function to start the quiz

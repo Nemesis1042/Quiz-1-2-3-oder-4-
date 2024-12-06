@@ -1,43 +1,38 @@
 <?php
-// Database connection
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $host = 'localhost';
 $user = 'd042262e';
 $password = 'BmYDUuduxafo3HcfnsqE';
 $database = 'd042262e';
 
-// Create a connection
 $conn = new mysqli($host, $user, $password, $database);
 
-// Check the connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 
-// Fetch questions
+$conn->set_charset('utf8mb4'); // Set UTF-8 charset
+
 $sql = "SELECT question, option1, option2, option3, option4, correct_option FROM questions";
 $result = $conn->query($sql);
 
-if (!$result) {
-    die("Error executing query: " . $conn->error);
-}
-
-
+header('Content-Type: text/plain; charset=utf-8');
 if ($result->num_rows > 0) {
-    $questions = array();
+    $output = "";
     while ($row = $result->fetch_assoc()) {
-        $questions[] = array(
-            "question" => $row["question"],
-            "options" => array($row["option1"], $row["option2"], $row["option3"], $row["option4"]),
-            "correctAnswer" => intval($row["correct_option"]) - 1
-        );
+        $output .= $row["question"] . "|" .
+                   $row["option1"] . "|" .
+                   $row["option2"] . "|" .
+                   $row["option3"] . "|" .
+                   $row["option4"] . "|" .
+                   $row["correct_option"] . "\n";
     }
-    echo json_encode($questions);
+    echo trim($output);
 } else {
-    echo json_encode([]);
+    echo "No questions found";
 }
 
 $conn->close();
 ?>
-
-
-
