@@ -8,6 +8,17 @@
     <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+    <script>
+        function checkPassword() {
+            var password = prompt("Bitte geben Sie das Passwort ein:");
+            if (password === "root") {
+                window.location.href = "admin.php";
+            } else {
+                alert("Falsches Passwort. Bitte versuchen Sie es erneut.");
+            }
+        }
+    </script>
+    <button onclick="checkPassword()">Admin Bereich</button>
     <h1 class="quiz-heading">1, 2, 3 oder 4<br />Die Quizshow</h1>
     <button id="start-button" class="start-button">Start</button>
 

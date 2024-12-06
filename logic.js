@@ -48,7 +48,7 @@ function startQuiz() {
 // Function to display the current question
 function showQuestion() {
     if (currentQuestionIndex >= questions.length) {
-        alert("Quiz completed!");
+        alert("Quiz abgeschlossen!");
         resetQuiz();
         return;
     }
@@ -63,28 +63,40 @@ function showQuestion() {
         const button = document.createElement("button");
         button.textContent = option;
         button.className = "option";
-        button.addEventListener("click", () => checkAnswer(index));
         optionsContainer.appendChild(button);
     });
+
+    playAudioWithDelay();
 }
 
-// Function to check the selected answer
-function checkAnswer(selectedIndex) {
+// Function to play audio and wait before showing the correct answer
+function playAudioWithDelay() {
+    const audio = new Audio("1,2_oder3.mp3");
+    audio.play();
+
+    // Wait for the audio to finish before showing the correct answer
+    audio.onended = () => {
+        setTimeout(showCorrectAnswer, 2000); // 2 seconds after audio ends
+    };
+}
+
+// Function to show the correct answer
+function showCorrectAnswer() {
     const currentQuestion = questions[currentQuestionIndex];
     const options = document.querySelectorAll(".option");
 
     options.forEach((option, index) => {
         if (index === currentQuestion.correctAnswer) {
             option.classList.add("correct");
-        } else {
-            option.classList.remove("correct");
         }
     });
 
+    // Wait for 8 seconds before showing the next question
     setTimeout(() => {
+        options.forEach((option) => option.classList.remove("correct"));
         currentQuestionIndex++;
         showQuestion();
-    }, 2000);
+    }, 8000);
 }
 
 // Function to reset the quiz
