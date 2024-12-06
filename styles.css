@@ -1,0 +1,100 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(wallpaper.jpg);
+    background-repeat: no-repeat;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#quiz-container {
+    max-width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    /* Vollständige Höhe des Bildschirms nutzen */
+    justify-content: flex-end;
+    /* Am unteren Rand ausrichten */
+    margin-top: 10px;
+}
+
+#button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* Zentriert die Buttons horizontal */
+    height: 300px;
+
+    margin-top: 20px;
+    /* Fügt einen Abstand oberhalb der Buttons hinzu */
+}
+
+#question {
+    font-size: 56px;
+    margin-bottom: 200px;
+    height: auto;
+    justify-content: center;
+    color: rgb(254, 254, 254)
+}
+
+#options {
+    display: flex;
+    flex-direction: row;
+    /* Ändern Sie die Richtung auf "row" */
+    gap: 10px;
+    width: 1500px;
+    max-width: 1600px;
+    /* Ändern Sie die maximale Breite nach Bedarf */
+    margin-bottom: 150px;
+    margin-left: 60px;
+    /* Fügt einen Abstand unterhalb der Buttons hinzu */
+    height: 300px;
+    align-self: start;
+}
+
+.option {
+    cursor: pointer;
+    padding: 10px;
+    background-color: #3498db86;
+    color: #f8f8f8;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+    width: 270px;
+    height: 300px;
+    margin-left: 50px;
+    /* Fügt einen Abstand zwischen den Buttons hinzu */
+}
+
+.correct {
+    background-color: #2ecc71;
+}
+
+.quiz-heading {
+    font-size: 42px;
+    /* Passe die Schriftgröße nach Bedarf an */
+    font-weight: bold;
+    text-align: center;
+    /* Optional: Zentriere den Text */
+    color: #ffd700;
+    /* Passe die Textfarbe nach Bedarf an */
+    margin-bottom: 20px;
+    /* Optional: Setze einen Abstand nach unten */
+}
+
+button.start-button {
+    margin-right: 0px;
+    margin-top: 5px;
+}
