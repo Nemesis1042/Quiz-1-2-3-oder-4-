@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="de">
-
 <head>
     <meta charset="UTF-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
-    <title>1,2,3 oder 4</title>
+    <title>1, 2, 3 oder 4</title>
     <style>
         * {
             box-sizing: border-box;
@@ -16,11 +15,10 @@
             background-repeat: no-repeat;
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px;
-            background-size: cover;
-            background-position: center;
             margin: 0;
             padding: 0;
+            background-size: cover;
+            background-position: center;
             overflow: hidden;
         }
 
@@ -31,9 +29,7 @@
             flex-direction: column;
             align-items: center;
             height: 100vh;
-            /* Vollständige Höhe des Bildschirms nutzen */
             justify-content: flex-end;
-            /* Am unteren Rand ausrichten */
             margin-top: 10px;
         }
 
@@ -42,11 +38,8 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            /* Zentriert die Buttons horizontal */
             height: 300px;
-
             margin-top: 20px;
-            /* Fügt einen Abstand oberhalb der Buttons hinzu */
         }
 
         #question {
@@ -54,20 +47,17 @@
             margin-bottom: 200px;
             height: auto;
             justify-content: center;
-            color: rgb(254, 254, 254)
+            color: white;
         }
 
         #options {
             display: flex;
             flex-direction: row;
-            /* Ändern Sie die Richtung auf "row" */
             gap: 10px;
             width: 1500px;
             max-width: 1600px;
-            /* Ändern Sie die maximale Breite nach Bedarf */
             margin-bottom: 150px;
             margin-left: 60px;
-            /* Fügt einen Abstand unterhalb der Buttons hinzu */
             height: 300px;
             align-self: start;
         }
@@ -76,7 +66,7 @@
             cursor: pointer;
             padding: 10px;
             background-color: #3498db86;
-            color: #f8f8f8;
+            color: white;
             border: none;
             border-radius: 5px;
             font-size: 16px;
@@ -84,7 +74,6 @@
             width: 270px;
             height: 300px;
             margin-left: 50px;
-            /* Fügt einen Abstand zwischen den Buttons hinzu */
         }
 
         .correct {
@@ -93,43 +82,34 @@
 
         .quiz-heading {
             font-size: 42px;
-            /* Passe die Schriftgröße nach Bedarf an */
             font-weight: bold;
             text-align: center;
-            /* Optional: Zentriere den Text */
             color: #ffd700;
-            /* Passe die Textfarbe nach Bedarf an */
             margin-bottom: 20px;
-            /* Optional: Setze einen Abstand nach unten */
         }
 
         button.start-button {
-            margin-right: 0px;
             margin-top: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
-
 <body>
-    <button id="start-button" onclick="startQuiz()" class="start-button">Start</button>
-    <h1 class="quiz-heading">
-        1, 2 , 3 oder 4<br />
-        die Quizshow</h1>
-
-    
+    <h1 class="quiz-heading">1, 2, 3 oder 4<br />Die Quizshow</h1>
+    <button id="start-button" class="start-button">Start</button>
 
     <div id="quiz-container">
-        <div id="question">
-            &nbsp;</div>
-        <div id="options">
-            &nbsp;</div>
+        <div id="question">&nbsp;</div>
+        <div id="options">&nbsp;</div>
     </div>
-    <script src="questions.js"></script>
-    <script src="logic.js"></script>
-    <script>
-        document.getElementById("start-button").addEventListener("click", fetchQuestions);
-      </script>
-      
-</body>
 
+    <!-- JavaScript files -->
+    <script src="logic.js"></script>
+</body>
 </html>

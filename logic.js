@@ -74,5 +74,5 @@ function resetQuiz() {
     document.getElementsByClassName("start-button")[0].style.display = "block";
 }
 
-// Event listener for the start button
+// Attach event listener to start button
 document.getElementById("start-button").addEventListener("click", fetchQuestions);
