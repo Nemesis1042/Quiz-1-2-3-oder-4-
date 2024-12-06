@@ -1,41 +1,21 @@
 let questions = [];
 let currentQuestionIndex = 0;
-let resolveDelay = 10; // Standardzeit in Sekunden bis zur Auflösung
-let timerInterval;
 
-// Funktion zum Aktualisieren des Timers
-function startTimer() {
-    const timerElement = document.getElementById("timer");
-    let remainingTime = resolveDelay;
-
-    // Timer herunterzählen
-    timerInterval = setInterval(() => {
-        remainingTime--;
-        timerElement.textContent = remainingTime;
-
-        if (remainingTime <= 0) {
-            clearInterval(timerInterval);
-        }
-    }, 1000);
-}
-
-// Funktion zum Aktualisieren der Frage-Anzeige
-function updateQuestionStatus() {
-    const questionStatus = document.getElementById("current-question");
-    questionStatus.textContent = `Frage ${
-        currentQuestionIndex + 1
-    } von ${questions.length}`;
-}
-
-// Funktion zum Abrufen der Fragen
+// Function to fetch questions from the server
 async function fetchQuestions() {
     try {
         const response = await fetch("getquestion.php");
         if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
         }
-        const data = await response.json();
-        questions = data;
+
+        const textData = await response.text();
+        if (textData === "No questions found") {
+            alert("No questions available.");
+            return;
+        }
+
+        parseQuestions(textData);
         startQuiz();
     } catch (error) {
         console.error("Error fetching questions:", error);
@@ -43,26 +23,35 @@ async function fetchQuestions() {
     }
 }
 
-// Funktion zum Starten des Quiz
+// Function to parse plain-text questions into a structured array
+function parseQuestions(data) {
+    questions = data.split("\n").map((line) => {
+        const parts = line.split("|");
+        return {
+            question: parts[0],
+            options: [parts[1], parts[2], parts[3], parts[4]],
+            correctAnswer: parseInt(parts[5]) - 1, // Convert to 0-based index
+        };
+    });
+}
+
+// Function to start the quiz
 function startQuiz() {
     if (questions.length === 0) {
-        alert("Keine Fragen verfügbar.");
+        alert("No questions available.");
         return;
     }
-    document.getElementById("start-button").style.display = "none";
+    document.getElementsByClassName("start-button")[0].style.display = "none";
     showQuestion();
 }
 
-// Funktion zum Anzeigen der aktuellen Frage
+// Function to display the current question
 function showQuestion() {
     if (currentQuestionIndex >= questions.length) {
         alert("Quiz abgeschlossen!");
         resetQuiz();
         return;
     }
-
-    updateQuestionStatus();
-    startTimer();
 
     const currentQuestion = questions[currentQuestionIndex];
     document.getElementById("question").textContent = currentQuestion.question;
@@ -80,18 +69,18 @@ function showQuestion() {
     playAudioWithDelay();
 }
 
-// Funktion zum Abspielen des Audio und Warten bis zur Auflösung
+// Function to play audio and wait before showing the correct answer
 function playAudioWithDelay() {
     const audio = new Audio("1,2_oder3.mp3");
     audio.play();
 
-    // Wartezeit nach dem Audio bis zur Auflösung
+    // Wait for the audio to finish before showing the correct answer
     audio.onended = () => {
-        setTimeout(showCorrectAnswer, resolveDelay * 1000);
+        setTimeout(showCorrectAnswer, 2000); // 2 seconds after audio ends
     };
 }
 
-// Funktion zum Anzeigen der richtigen Antwort
+// Function to show the correct answer
 function showCorrectAnswer() {
     const currentQuestion = questions[currentQuestionIndex];
     const options = document.querySelectorAll(".option");
@@ -102,22 +91,40 @@ function showCorrectAnswer() {
         }
     });
 
-    // Nach der Auflösung zur nächsten Frage wechseln
+    // Wait for 8 seconds before showing the next question
     setTimeout(() => {
         options.forEach((option) => option.classList.remove("correct"));
         currentQuestionIndex++;
-        clearInterval(timerInterval);
         showQuestion();
-    }, resolveDelay * 1000);
+    }, 8000);
 }
 
-// Funktion zum Zurücksetzen des Quiz
+// Function to reset the quiz
 function resetQuiz() {
     currentQuestionIndex = 0;
-    document.getElementById("start-button").style.display = "block";
-    document.getElementById("current-question").textContent = "Frage 1";
-    clearInterval(timerInterval);
+    document.getElementsByClassName("start-button")[0].style.display = "block";
 }
 
-// Eventlistener für den Start-Button
+// Attach event listener to start button
 document.getElementById("start-button").addEventListener("click", fetchQuestions);
+
+function startTimer() {
+  const timerElement = document.getElementById("timer");
+  let remainingTime = 10;
+
+  timerElement.textContent = remainingTime;
+
+  const interval = setInterval(() => {
+      remainingTime--;
+      timerElement.textContent = remainingTime;
+
+      if (remainingTime <= 0) {
+          clearInterval(interval);
+      }
+  }, 1000);
+}
+
+function updateQuestionStatus(currentIndex, totalQuestions) {
+  const questionStatus = document.getElementById("current-question");
+  questionStatus.textContent = `Frage ${currentIndex + 1} von ${totalQuestions}`;
+}
