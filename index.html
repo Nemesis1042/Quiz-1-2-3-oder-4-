@@ -10,7 +10,7 @@
 <body>
     <script>
         function checkPassword() {
-            var password = prompt("Bitte geben Sie das Passwort ein:");
+            var password = prompt("Bitte geben Sie das Passwort ein:", "");
             if (password === "root") {
                 window.location.href = "admin.php";
             } else {
@@ -18,7 +18,7 @@
             }
         }
     </script>
-    <button onclick="checkPassword()">Admin Bereich</button>
+    <button onclick="checkPassword('&#114;&#111;&#111;&#116;')">Admin Bereich</button>
     <h1 class="quiz-heading">1, 2, 3 oder 4<br />Die Quizshow</h1>
 
     <!-- Timer oben links -->
@@ -28,7 +28,7 @@
 
     <!-- Frage-Nummer oben rechts -->
     <div id="question-status-container">
-        <span id="current-question"></span>
+        <span id="current-question">Frage 1 von 5</span>
     </div>
 
     <button id="start-button" class="start-button">Start</button>

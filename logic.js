@@ -1,5 +1,6 @@
 let questions = [];
 let currentQuestionIndex = 0;
+let totalQuestions = 0;
 
 // Function to fetch questions from the server
 async function fetchQuestions() {
@@ -22,6 +23,10 @@ async function fetchQuestions() {
         alert("Unable to load questions. Please try again later.");
     }
 }
+function updateQuestionStatus(currentIndex) {
+  const questionStatus = document.getElementById("current-question");
+  questionStatus.textContent = `Frage ${currentIndex + 1} von ${totalQuestions}`;
+}
 
 // Function to parse plain-text questions into a structured array
 function parseQuestions(data) {
@@ -33,6 +38,7 @@ function parseQuestions(data) {
             correctAnswer: parseInt(parts[5]) - 1, // Convert to 0-based index
         };
     });
+    totalQuestions = questions.length;
 }
 
 // Function to start the quiz
@@ -65,7 +71,8 @@ function showQuestion() {
         button.className = "option";
         optionsContainer.appendChild(button);
     });
-
+    startTimer();
+    updateQuestionStatus(currentQuestionIndex);
     playAudioWithDelay();
 }
 
@@ -110,7 +117,7 @@ document.getElementById("start-button").addEventListener("click", fetchQuestions
 
 function startTimer() {
   const timerElement = document.getElementById("timer");
-  let remainingTime = 10;
+  let remainingTime = 30; // Zeit in Sekunden, solange das Audio läuft
 
   timerElement.textContent = remainingTime;
 
@@ -122,9 +129,4 @@ function startTimer() {
           clearInterval(interval);
       }
   }, 1000);
-}
-
-function updateQuestionStatus(currentIndex, totalQuestions) {
-  const questionStatus = document.getElementById("current-question");
-  questionStatus.textContent = `Frage ${currentIndex + 1} von ${totalQuestions}`;
 }

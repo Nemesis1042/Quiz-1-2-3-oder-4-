@@ -38,10 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 WHERE id = $id";
     } elseif ($action === 'delete') {
         $sql = "DELETE FROM questions WHERE id = $id";
+
     }
 
     if ($conn->query($sql)) {
         echo "Aktion erfolgreich!";
+        header('Location: admin.php');
+        exit();
+    
     } else {
         echo "Fehler: " . $conn->error;
     }
